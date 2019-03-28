@@ -1,0 +1,14 @@
+{
+  "name": "mqtt-practice",
+  "version": "1.0.0",
+  "description": "A practice to introduce us to mqtt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alfonso Valencia",
+  "license": "ISC",
+  "dependencies": {
+    "mqtt": "^2.18.8"
+  }
+}
