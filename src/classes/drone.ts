@@ -1,6 +1,6 @@
 import Vector from './vector';
 
-export class Drone {
+export default class Drone {
 
   public static droneCount = 1;
 
