@@ -1,6 +1,6 @@
 import { connect } from 'mqtt';
-import Drone from '../classes/drone';
-import Vector from '../classes/vector';
+import Drone from './utility/drone';
+import Vector from './utility/vector';
 
 const client = connect('mqtt://test.mosquitto.org');
 let myDrone = new Drone(new Vector(30, 0, 30));

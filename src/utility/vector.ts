@@ -24,6 +24,10 @@ export default class Vector {
     return Math.pow(Math.pow(vB.x - vA.x, 2) + Math.pow(vB.y - vA.y, 2) + Math.pow(vB.y - vA.y, 2), 1/2);
   }
 
+  public static equals(v1: Vector, v2: Vector): boolean {
+    return (v1.x === v2.x && v1.y === v2.y && v1.z === v2.z);
+  }
+
   /* Instance methods */
   public add(vector: Vector): void {
     this.x += vector.x;
@@ -43,6 +47,10 @@ export default class Vector {
     this.x /= vector.x;
     this.y /= vector.y;
     this.z /= vector.z;
+  }
+
+  public equals(vector: Vector): boolean {
+    return (this.x === vector.x && this.y === vector.y && this.z === vector.z);
   }
 
   public multiply(number: number): void;
