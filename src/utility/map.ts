@@ -1,6 +1,6 @@
 import Vector from './vector';
 
-export interface Place {
+export type Place = {
   name: string;
   location: Vector;
 }
@@ -55,6 +55,9 @@ export class Map {
     for (const place of this.places) {
       exists = (exists && (Map.equalPlaces(place, p)));
     }
+
+    if (this.places.length === 0)
+      return false;
 
     return exists;
   }

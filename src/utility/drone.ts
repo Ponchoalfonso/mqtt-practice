@@ -40,6 +40,29 @@ export default class Drone {
     this.stopSequence.push(stopPoint);
   }
 
+  public nextTrip(): void { this.trip++ }
+
+  public smallRestruct(): any {
+    return {
+      id: this.id,
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+        z: this.position.z
+      },
+      velocity: {
+        x: this.velocity.x,
+        y: this.velocity.y,
+        z: this.velocity.z
+      },
+      headingTo: {
+        x: this.nextStop.x,
+        y: this.nextStop.y,
+        z: this.nextStop.z
+      }
+    }
+  }
+
   public getStopAtTtrip(trip: number): Vector {
     return this.stopSequence[(trip - 1) % this.stopSequence.length];
   }

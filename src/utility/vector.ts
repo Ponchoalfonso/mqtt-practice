@@ -21,7 +21,7 @@ export default class Vector {
 
   /* Static methods */
   public static distance(vA: Vector, vB: Vector) {
-    return Math.pow(Math.pow(vB.x - vA.x, 2) + Math.pow(vB.y - vA.y, 2) + Math.pow(vB.y - vA.y, 2), 1/2);
+    return Math.pow(Math.pow(vB.x - vA.x, 2) + Math.pow(vB.y - vA.y, 2) + Math.pow(vB.z - vA.z, 2), 1/2);
   }
 
   public static equals(v1: Vector, v2: Vector): boolean {
