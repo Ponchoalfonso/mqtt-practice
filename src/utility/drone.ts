@@ -54,11 +54,6 @@ export default class Drone {
         x: this.velocity.x,
         y: this.velocity.y,
         z: this.velocity.z
-      },
-      headingTo: {
-        x: this.nextStop.x,
-        y: this.nextStop.y,
-        z: this.nextStop.z
       }
     }
   }
@@ -70,6 +65,12 @@ export default class Drone {
   public move(): void {
     if (this.state)
       this.position.add(this.velocity);
+    this.fixPos();
+  }
+
+  private fixPos() {
+    if (this.position.y < 0)
+      this.position.y = 0;
   }
 
 }

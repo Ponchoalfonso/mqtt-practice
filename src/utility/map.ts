@@ -1,4 +1,5 @@
 import Vector from './vector';
+import { isArray } from 'util';
 
 export type Place = {
   name: string;
@@ -35,19 +36,32 @@ export class Map {
   public getQuadrant(position: Vector): number[];
   public getQuadrant(x: number, z: number): number[];
   public getQuadrant(val: any, z: number = null): number[] {
-    let x;
+    let x: number;
     if (val instanceof Vector) {
       x = val.x;
       z = val.z;
-    } else if (typeof(val) === 'number' && z) {
+    } else if (typeof(val) === 'number' && !isNaN(z))
       x = val;
-    }
 
-    if (x > this.width || z > this.length)
+    if (x >= this.width || z >= this.length || x < 0 || z < 0)
       return [];
-    else {
-      [Math.ceil(x / this.quadrantSize) - 1, Math.ceil(z / this.quadrantSize) - 1]
-    }
+    else
+      return [Math.floor(x / this.quadrantSize), Math.floor(z / this.quadrantSize)];
+  }
+
+  public getQuadrantIndex(position: Vector);
+  public getQuadrantIndex(quadrant: number[]);
+  public getQuadrantIndex(val: any): number {
+    let quadrant: any;
+    if (val instanceof Vector)
+      quadrant = this.getQuadrant(val);
+    else if (isArray(val))
+      quadrant = val;
+
+    if (quadrant.length === 2 && quadrant)
+      return quadrant[0] + quadrant[1] * Math.floor(this.width / this.quadrantSize);
+    else
+      return -1;
   }
 
   public placeExists(p: Place): boolean {

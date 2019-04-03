@@ -8,7 +8,7 @@ let myDrone = new Drone(new Vector(30, 0, 30));
 client.on('connect', function () {
   client.subscribe('presence', function (err) {
     if (!err) {
-      client.publish('presence', Buffer.from(JSON.stringify(myDrone), 'utf8'));
+      client.publish('presence', 'Hi!!');
     }
   });
 });
@@ -16,6 +16,5 @@ client.on('connect', function () {
 client.on('message', function (topic, message) {
   // message is Buffer
   console.log(message.toString());
-  client.end();
 });
 

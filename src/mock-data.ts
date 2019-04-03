@@ -7,7 +7,7 @@ const myPlaces = [
   { name: "A", location: new Vector(70,   0, 400 ) },
   { name: "B", location: new Vector(988,  0, 577 ) },
   { name: "C", location: new Vector(118,  0, 72  ) },
-  { name: "D", location: new Vector(1436, 0, 1000) },
+  { name: "D", location: new Vector(1436, 0, 999) },
   { name: "E", location: new Vector(1720, 0, 928 ) },
   { name: "F", location: new Vector(1901, 0, 662 ) },
   { name: "G", location: new Vector(1051, 0, 305 ) },
@@ -21,3 +21,8 @@ const addPlacesToMap = (map: Map, places: Place[]) => {
     map.addPlace(place);
   }
 }
+
+addPlacesToMap(myMap, myPlaces);
+let quadrant = myMap.getQuadrant(1999, 999);
+console.log(quadrant);
+console.log(myMap.getQuadrantIndex(quadrant));

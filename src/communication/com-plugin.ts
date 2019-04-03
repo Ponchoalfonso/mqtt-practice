@@ -14,12 +14,10 @@ export default class CommunicationPlugin {
     });
     this.dlist = droneList;
     this.client.on('message', function (topic, message) {
-      this.addDrone(
-        { 
-          ...JSON.parse(message.toString()),
-          quadrant: CommunicationPlugin.topicToQuadrant(topic)
-        }
-      );
+      this.addDrone({
+        ...JSON.parse(message.toString()),
+        quadrant: CommunicationPlugin.topicToQuadrant(topic)
+      });
     });
   }
 
@@ -27,7 +25,7 @@ export default class CommunicationPlugin {
   public get ready() { return this._ready; }
 
   /* Static methods */
-  public static quadrantToTopic(quadrant: number[]): string { return `map/qdrt-${quadrant[0]}-${quadrant[1]}`; }
+  public static quadrantToTopic(quadrant: number[]): string { return `poncho/map/qdrt-${quadrant[0]}-${quadrant[1]}`; }
 
   public static topicToQuadrant (topic: string): number[] {
     let start = topic.indexOf('qdrt-');
@@ -54,16 +52,20 @@ export default class CommunicationPlugin {
 
   public end(): void { this.client.end(); }
 
-  public publishDrone(drone: Drone, quadrant: number[]): void {
+  public publish(drone: Drone, quadrant: number[]): void {
     if (quadrant.length === 2) {
       this.client.publish(
         CommunicationPlugin.quadrantToTopic(quadrant),
-        Buffer.from(JSON.stringify(drone), 'utf8')
+        Buffer.from(JSON.stringify(drone.smallRestruct()), 'utf8')
       );
     } else { console.warn(`DRN${drone.id}: Bad quadrant!`); }
   }
 
   public subscribe(quadrant: number[]): void {
     this.client.subscribe(CommunicationPlugin.quadrantToTopic(quadrant));
+  }
+
+  public unsubscribe(quadrant: number[]): void {
+    this.client.unsubscribe(CommunicationPlugin.quadrantToTopic(quadrant));
   }
 }

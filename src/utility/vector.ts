@@ -67,6 +67,12 @@ export default class Vector {
     }
   }
 
+  public normalize(): void {
+    this.x /= Math.abs(this.magnitude);
+    this.y /= Math.abs(this.magnitude);
+    this.z /= Math.abs(this.magnitude);
+  }
+
   public substract(vector: Vector): void {
     this.x += vector.x;
     this.y += vector.y;
