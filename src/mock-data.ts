@@ -14,7 +14,13 @@ const myPlaces = [
   { name: "H", location: new Vector(151,  0, 898 ) },
   { name: "I", location: new Vector(626,  0, 891 ) }
 ];
+const myDrones = [
+  new Drone(new Vector(70, 0, 400)),
+];
 
+const stops = [
+  [5, 4, 1, 7],
+];
 
 const addPlacesToMap = (map: Map, places: Place[]) => {
   for (const place of places) {
@@ -22,7 +28,17 @@ const addPlacesToMap = (map: Map, places: Place[]) => {
   }
 }
 
-addPlacesToMap(myMap, myPlaces);
-let quadrant = myMap.getQuadrant(1999, 999);
-console.log(quadrant);
-console.log(myMap.getQuadrantIndex(quadrant));
+const addRouteToDrone = (drone: Drone, placeIndexes: number[], map: Map) => {
+  for (const index of placeIndexes) {
+    drone.addStopToSequence(map.getPlace(index).location);
+  }
+}
+
+export const init = (index: number) => {
+  addPlacesToMap(myMap, myPlaces);
+  for (let i = 0; i < myDrones.length; i++) {
+    addRouteToDrone(myDrones[i], stops[i], myMap);
+  }
+
+  return { drone: myDrones[index], map: myMap };
+}

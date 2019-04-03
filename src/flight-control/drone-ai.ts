@@ -3,7 +3,7 @@ import { Map, Place } from '../utility/map';
 import CommunicationPlugin from '../communication/com-plugin';
 import Vector from '../utility/vector';
 
-export class DroneAI {
+export default class DroneAI {
 
   private complug: CommunicationPlugin;
   private drone: Drone;
@@ -108,6 +108,8 @@ export class DroneAI {
     this.dropDrones();
     this.complug.publish(this.drone, this.map.getQuadrant(this.drone.position));
     this.complug.publish(this.drone, this.nextQuadrant);
+    this.complug.subscribe(this.map.getQuadrant(this.drone.position));
+    this.complug.subscribe(this.nextQuadrant);
   }
 
   public descend(): void {
@@ -156,11 +158,14 @@ export class DroneAI {
       else if (this.onStop && this.onFloor) {
         this.stay();
         this.drone.state = false;
-      } else if(!this.onStop && this.onFloor && !this.onHeightLimit)
+      } else if(!this.onStop && this.onFloor && !this.onHeightLimit) {
+        this.stay();
         this.elevate();
+      }
       else if(!this.onStop && this.inAir)
         this.headTo(this.drone.nextStop);
-    }
+    } else
+      this.startTrip();
     this.drone.move();
   }
 

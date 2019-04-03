@@ -1,5 +1,6 @@
 import Drone from '../utility/drone'; 
 import { Client, connect } from 'mqtt';
+import { log } from 'util';
 
 export default class CommunicationPlugin {
 
@@ -13,7 +14,7 @@ export default class CommunicationPlugin {
       this._ready = true;
     });
     this.dlist = droneList;
-    this.client.on('message', function (topic, message) {
+    this.client.on('message', (topic, message) => {
       this.addDrone({
         ...JSON.parse(message.toString()),
         quadrant: CommunicationPlugin.topicToQuadrant(topic)
@@ -58,6 +59,7 @@ export default class CommunicationPlugin {
         CommunicationPlugin.quadrantToTopic(quadrant),
         Buffer.from(JSON.stringify(drone.smallRestruct()), 'utf8')
       );
+      console.log('Data sent');
     } else { console.warn(`DRN${drone.id}: Bad quadrant!`); }
   }
 
